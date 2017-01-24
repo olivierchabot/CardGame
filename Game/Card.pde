@@ -12,7 +12,7 @@ public class Card
   
   public Card(int s, int n)
   {
-    suit = suits.get(s);
+    suit = suits[s];
     num = n;
     faceUp = false;
     
