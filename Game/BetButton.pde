@@ -1,9 +1,9 @@
 
 
-public class PassButton extends Button
+public class BetButton extends Button
 {
  
-  public PassButton(PVector s, PVector p)
+  public BetButton(PVector s, PVector p)
   {
     super(s, p);
   }
@@ -19,15 +19,18 @@ public class PassButton extends Button
       fill(0, 255, 0);
     textSize(24);
     textAlign(CENTER, CENTER);
-    text("Pass", position.x + size.x/2, position.y + size.y/2);
+    text("Reduce Bet", position.x + size.x/2, position.y + size.y/2);
   }
   
   public void checkClick()
   {
     if (inRect(new PVector(mouseX, mouseY), position, position.copy().add(size)))
     {
-      if (phase == Phase.BETTING || phase == Phase.REDUCE1 || phase == Phase.REDUCE2)
+      if (phase == Phase.REDUCE1 || phase == Phase.REDUCE2)
+      {
+        pot *= 0.67;
         phase = phase.next();
+      }
     }
   }
   

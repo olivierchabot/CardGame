@@ -30,12 +30,14 @@ public class ChipButton extends Button
   
   public void checkClick()
   {
-    if (inRect(new PVector(mouseX, mouseY), position, position.copy().add(size)))
+    if (inRect(new PVector(mouseX, mouseY), position, position.copy().add(size))
+        && phase == Phase.BETTING)
     {
-      if (value <= cash && phase == 0)
+      if (value <= cash)
       {
         cash -= value;
         pot += value;
+        animations.add(new Animation(img.copy(), position.copy(), new PVector(screen[0]/2, screen[1]/2), 1.2));
       }
     }
   }
