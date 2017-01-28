@@ -23,6 +23,7 @@ public static enum Phase {
 
 Phase phase;
 float pot, cash;
+boolean betCheck; //check if bet was reduced on first round
 
 void settings()
 {
@@ -57,6 +58,7 @@ void startRound()
 {
   phase = Phase.BETTING;
   pot = 0.0;
+  betCheck = false;
   
   deck.shuffle();
   hand.clear();
@@ -107,7 +109,8 @@ void draw()
   }
   
   fill(255, 0, 0);
-  text("$" + String.format("%.2f", pot), screen[0]/2, screen[1]/2);
+  text("Pot: $" + String.format("%.2f", pot), screen[0]/2, screen[1]/2);
+  text("Your Cash: $" + String.format("%.2f", cash), screen[0]*3/4, screen[1] - 100);
 }
 
 boolean inRect(PVector mouse, PVector topLeft, PVector bottomRight)
@@ -120,9 +123,65 @@ boolean inRect(PVector mouse, PVector topLeft, PVector bottomRight)
   return false;
 }
 
+public static enum Hand
+{
+  ROYAL_FLUSH, STRAIGHT_FLUSH, FOUR_OF_A_KIND, FULL_HOUSE, FLUSH, STRAIGHT, THREE_OF_A_KIND, TWO_PAIR, PAIR, LOSS
+}
+
+/*
+  Royal Flush           1,000 to 1
+  Straight Flush        200   to 1
+  Four of a Kind        50    to 1
+  Full House            11    to 1
+  Flush                 8     to 1
+  Straight              5     to 1
+  Three of a kind       3     to 1
+  Two Pair              2     to 1
+  Pair of 10s or better 1     to 1
+*/
 void calculatePayout()
 {
-  //calculate the payout :D
+  Hand h = getHand();
+  switch(h)
+  {
+    case ROYAL_FLUSH:
+      cash += pot*1000;
+      break;
+    case STRAIGHT_FLUSH:
+      cash += pot*200;
+      break;
+    case FOUR_OF_A_KIND:
+      cash += pot*50;
+      break;
+    case FULL_HOUSE:
+      cash += pot*11;
+      break;
+    case FLUSH:
+      cash += pot*8;
+      break;
+    case STRAIGHT:
+      cash += pot*5;
+      break;
+    case THREE_OF_A_KIND:
+      cash += pot*3;
+      break;
+    case TWO_PAIR:
+      cash += pot*2;
+      break;
+    case PAIR:
+      cash += pot;
+      break;
+    case LOSS:
+      cash += 0;
+  }
+  
+}
+
+public Hand getHand()
+{
+  
+  
+  return Hand.LOSS;
 }
 
 void mouseClicked()

@@ -26,9 +26,18 @@ public class BetButton extends Button
   {
     if (inRect(new PVector(mouseX, mouseY), position, position.copy().add(size)))
     {
-      if (phase == Phase.REDUCE1 || phase == Phase.REDUCE2)
+      if (phase == Phase.REDUCE1)
       {
-        pot *= 0.67;
+        pot *= 0.666666;
+        betCheck = true;
+        phase = phase.next();
+      }
+      else if (phase == Phase.REDUCE2)
+      {
+        if (betCheck)
+          pot *= 0.5;
+        else
+          pot *= 0.666666;
         phase = phase.next();
       }
     }
