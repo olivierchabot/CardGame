@@ -19,7 +19,7 @@ public class PassButton extends Button
       fill(0, 255, 0);
     textSize(24);
     textAlign(CENTER, CENTER);
-    text("Pass", position.x + size.x/2, position.y + size.y/2);
+    text("Let it ride!", position.x + size.x/2, position.y + size.y/2);
   }
   
   public void checkClick()

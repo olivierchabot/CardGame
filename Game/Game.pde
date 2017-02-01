@@ -5,6 +5,9 @@ import java.util.Random;
 int[] screen = { 1920, 1080 };
 color background = #11BC1B;
 
+//delta time stuff
+int delta, lastTime;
+
 //Main collections
 ArrayList<PImage> images = new ArrayList<PImage>(53);
 final String[] suits = {"clubs", "diamonds", "hearts", "spades"};
@@ -42,6 +45,9 @@ void setup()
   deck = new Deck();
   cash = 101010100;
   startRound();
+  
+  delta = 0;
+  lastTime = 0;
     
   //spawn buttons
   buttons.add(new BetButton(new PVector(160, 80), new PVector(screen[0] - 200, screen[1] - 200)));
@@ -68,10 +74,13 @@ void startRound()
     hand.add(deck.pop());
   for (int i=0; i < 2; i++)
     flop.add(deck.pop());
+    
+  animations.add(new FadingText("Place your bet", new PVector(screen[0]/2, screen[1]/2 - 100), 3, #FC2EE5));
 }
 
 void draw()
 {
+  delta = millis() - lastTime;
   background(background);
   
   if (phase == Phase.FLIP)
@@ -104,11 +113,12 @@ void draw()
   for (int i=0; i < animations.size(); i++)
   {
     animations.get(i).draw();
-    if (!animations.get(i).alive)
-      animations.remove(i);
+    if (animations.get(i).toKill) animations.remove(i);
   }
   
   fill(255, 0, 0);
+  textSize(24);
+  textAlign(CENTER);
   text("Pot: $" + String.format("%.2f", pot), screen[0]/2, screen[1]/2);
   text("Your Cash: $" + String.format("%.2f", cash), screen[0]*3/4, screen[1] - 100);
 }
@@ -179,7 +189,7 @@ void calculatePayout()
 
 public Hand getHand()
 {
-  
+  //find out what hand exists, return it
   
   return Hand.LOSS;
 }
