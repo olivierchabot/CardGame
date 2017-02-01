@@ -7,7 +7,7 @@ color background = #11BC1B;
 
 //delta time stuff
 int delta, lastTime;
-
+float lmao = 69;
 //Main collections
 ArrayList<PImage> images = new ArrayList<PImage>(53);
 final String[] suits = {"clubs", "diamonds", "hearts", "spades"};
