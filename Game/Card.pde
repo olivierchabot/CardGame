@@ -20,11 +20,16 @@ public class Card
     back = images.get(images.size()-1);
   }
   
-  public int compare(Card c)
+  public boolean compareValue(Card c)
   {
-    if (num < c.num) return -1;
-    else if (num > c.num) return 1;
-    return 0;
+    if (num == c.num) return true;
+    return false;
+  }
+  
+  public boolean compareSuit(Card c)
+  {
+    if (suit == c.suit) return true;
+    return false;
   }
   
   public void draw(PVector v)
