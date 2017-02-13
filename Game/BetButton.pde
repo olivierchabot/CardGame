@@ -1,13 +1,20 @@
-
+/*
+  Button to reduce bet on the two betting phases
+*/
 
 public class BetButton extends Button
 {
  
+  /*
+    @param s : size of the button
+    @param p : position of the button
+  */
   public BetButton(PVector s, PVector p)
   {
     super(s, p);
   }
   
+  //draw the button to the screen, changing colour if moused over
   public void draw()
   {
     fill(#111BBC);
@@ -22,6 +29,7 @@ public class BetButton extends Button
     text("Reduce Bet", position.x + size.x/2, position.y + size.y/2);
   }
   
+  //handle moues click
   public void checkClick()
   {
     if (inRect(new PVector(mouseX, mouseY), position, position.copy().add(size)))
@@ -31,6 +39,7 @@ public class BetButton extends Button
         pot *= 0.666666;
         betCheck = true;
         phase = phase.next();
+        animations.add(new FadingText("Reduce your bet or pass", new PVector(screen[0]/2, screen[1]/2 - 100), 3, #FC2EE5));
       }
       else if (phase == Phase.REDUCE2)
       {

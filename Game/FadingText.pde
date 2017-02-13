@@ -1,4 +1,6 @@
-
+/*
+  Animation to show temporary text on sreen which fades out
+*/
 
 class FadingText extends Animation
 {
@@ -7,16 +9,22 @@ class FadingText extends Animation
   int duration, timeAlive;
   color textColor;
   
+  /*
+    @param t : time on screen
+    @param pos : position on screen
+    @param c : color of the text
+  */
   public FadingText(String t, PVector pos, int dur, color c)
   {
     super(pos);
-    duration = dur*100000;
+    duration = dur*1000;
     text = t;
     textColor = c;
     timeAlive = 0;
     toKill = false;
   }
   
+  //draws the text to the screen and calculates its alpha value
   void draw()
   {
     textAlign(CENTER);

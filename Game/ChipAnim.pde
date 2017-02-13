@@ -1,4 +1,7 @@
-
+/*
+  Animation for an image going from one point to another,
+  only used for the chips when placing a bet
+*/
 
 public class ChipAnim extends Animation
 {
@@ -7,6 +10,12 @@ public class ChipAnim extends Animation
   PImage img;
   float speed;
  
+  /*
+    @param i : image of the chip
+    @param start : starting coords
+    @param e : end coords
+    @param s : speed of the chip
+  */
   public ChipAnim(PImage i, PVector start, PVector e, float s)
   {
     super(start);
@@ -16,6 +25,7 @@ public class ChipAnim extends Animation
     speed = s;
   }
   
+  //draw the chips to the screen
   public void draw()
   {
     if (position.dist(end) <= img.width/2) toKill = true;

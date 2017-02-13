@@ -1,4 +1,8 @@
-
+/*
+  abstract class for buttons,
+  holds size and position,
+  draw and checkClick functions
+*/
 
 public abstract class Button
 {
