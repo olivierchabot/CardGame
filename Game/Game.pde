@@ -16,6 +16,12 @@ ArrayList<Card> hand = new ArrayList<Card>(3);
 ArrayList<Card> flop = new ArrayList<Card>(2);
 ArrayList<Button> buttons = new ArrayList<Button>();
 ArrayList<Animation> animations = new ArrayList<Animation>();
+int[] counts = {0, 0, 0, 0};
+
+//Game states
+public static enum GameState {
+  PLAYING, MENU, INSTRUCTIONS  
+}
 
 //Phases of the game
 public static enum Phase {
@@ -28,6 +34,7 @@ public static enum Phase {
 }
 
 Phase phase; //current phase
+GameState state; //current gameState
 float pot, cash; //keep track of the money
 boolean betCheck; //check if bet was reduced on first round
 
@@ -50,6 +57,7 @@ void setup()
   deck = new Deck();
   cash = 100000; //starting cash
   startRound();
+  state = GameState.MENU;
 
   delta = 0; lastTime = 0;
 
@@ -87,8 +95,35 @@ void draw()
 {
   //compute deltatime for animations
   delta = millis() - lastTime;
+  
+  //draw the background
   background(background);
+  
+  switch (state)
+  {
+    case MENU:
+      textAlign(CENTER, CENTER);
+      textSize(48);
+      fill(255, 0, 0);
+      text("This is the menu screen, press i to view the instructions, or p to play the game", screen[0]/2, screen[1]/2);
+      break;
+    case INSTRUCTIONS:
+      textAlign(CENTER, CENTER);
+      textSize(48);
+      fill(255, 0, 0);
+      text("This is the instruction screen, press b to return to the menu", screen[0]/2, screen[1]/2);
+      break;
+    case PLAYING:
+      drawGame();
+      break;
+  }
+  
+  lastTime = millis();
+}
 
+//run the main game
+void drawGame()
+{
   //handle phases, flipping cards/calculating payout
   if (phase == Phase.FLIP)
   {
@@ -128,8 +163,6 @@ void draw()
   textAlign(CENTER);
   text("Pot: $" + String.format("%.2f", pot), screen[0]/2, screen[1]/2);
   text("Your Cash: $" + String.format("%.2f", cash), screen[0]*3/4, screen[1] - 100);
-  
-  lastTime = millis();
 }
 
 /*
@@ -205,6 +238,8 @@ void calculatePayout()
   }
   
   cash += payout;
+  
+  animations.clear();
   animations.add(new FadingText("Your Payout: " + String.format("%.2f", payout), new PVector(screen[0]/2, screen[1]/2 + 100), 5, #FCEB45));
   
   startRound();
@@ -223,4 +258,17 @@ void mouseClicked()
 {
   for (int i=0; i < buttons.size(); i++)
     buttons.get(i).checkClick();
+}
+
+void keyPressed()
+{
+  if (state == GameState.MENU)
+  {
+    if (key == 'p') state = GameState.PLAYING;
+    if (key == 'i') state = GameState.INSTRUCTIONS;
+  }
+  else if (state == GameState.INSTRUCTIONS)
+  {
+    if (key == 'b') state = GameState.MENU; 
+  }
 }

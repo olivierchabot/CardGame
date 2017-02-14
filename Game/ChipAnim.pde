@@ -9,6 +9,7 @@ public class ChipAnim extends Animation
   PVector direction, end;
   PImage img;
   float speed;
+  
  
   /*
     @param i : image of the chip
@@ -28,9 +29,9 @@ public class ChipAnim extends Animation
   //draw the chips to the screen
   public void draw()
   {
-    if (position.dist(end) <= img.width/2) toKill = true;
+    if (!(position.dist(end) <= img.width/2))
+      position.add(direction.mult(speed));
     image(img, position.x, position.y);
-    position.add(direction.mult(speed));
   }
   
 }

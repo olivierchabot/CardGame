@@ -47,7 +47,7 @@ public class ChipButton extends Button
       {
         cash -= value;
         pot += value;
-        animations.add(new ChipAnim(img.copy(), position.copy(), new PVector(screen[0]/2, screen[1]/2), 1.2));
+        animations.add(new ChipAnim(img.copy(), position.copy(), new PVector(screen[0]/2 + random(-50, 50), screen[1]/2 + 100 + random(-50, 50)), 1.2));
       }
     }
   }
